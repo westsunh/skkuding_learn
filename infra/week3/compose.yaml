@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .           # 현재 디렉토리 Dockerfile로 빌드
+    # ports 없음! → 외부에서 3000번으로 직접 접근 불가
+    # Nginx를 통해서만 접근 가능
+
+  nginx:
+    image: nginx       # Docker Hub의 공식 Nginx 이미지 사용
+    ports:
+      - "80:80"        # 외부 80번 → 컨테이너 80번
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # 내 설정 파일을 컨테이너 안으로
+    depends_on:
+      - app            # app이 먼저 시작된 후에 nginx 시작
